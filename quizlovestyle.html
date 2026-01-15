@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Vampire Love Style Quiz</title>
+<title>Love Style Quiz</title>
 <!-- Google Fonts for a Gothic/Romantic style -->
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=Great+Vibes&display=swap" rel="stylesheet">
 <style>
@@ -209,7 +209,7 @@
 <body>
 
 <div class="container">
-  <h1>Vampire Love Quiz</h1>
+  <h1>Valentine's Love Quiz</h1>
   <!-- Start Button -->
   <button id="start-btn">Start the Night</button>
   <div id="quiz-container" style="margin-top:20px; display:none;"></div>
@@ -247,7 +247,7 @@
 
     const results = {
       "deep purple": {
-        type: "The Mysterious Enchantress",
+        type: "The Mysterious valentine",
         description: "Your soul is deep and enigmatic. You thrive in shadows and whisper secrets only the night knows."
       },
       "violet": {
@@ -259,7 +259,7 @@
         description: "Serene and composed, you glide through the night with grace, a peaceful presence in the dark."
       },
       "rose red": {
-        type: "The Passionate Vampire",
+        type: "The Passionate Valentine",
         description: "Your love is intense and eternal. You burn with desire and charm everyone with your fiery spirit."
       }
     };
@@ -381,7 +381,7 @@
       // Show Restart and Share buttons
       const restartBtn = document.createElement('button');
       restartBtn.className = 'action-btn';
-      restartBtn.innerText = 'Restart the Night';
+      restartBtn.innerText = 'Restart';
       restartBtn.onclick = () => {
         answers = {};
         currentQuestionIndex = 0;
