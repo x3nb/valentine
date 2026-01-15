@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Love Quiz</title>
+<!-- Google Fonts for a Gothic/Romantic style -->
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=Great+Vibes&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --dark-purple: #2c003e;
+    --midnight-blue: #0d1b2a;
+    --moonlit-silver: #cbd5e1;
+    --violet: #6a0dad;
+    --lavender: #b57edc;
+    --ivory: #f3f0e8;
+  }
+
+  body {
+    font-family: 'Lora', serif;
+    background: linear-gradient(135deg, var(--midnight-blue), #000);
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    color: var(--moonlit-silver);
+  }
+
+  .container {
+    background-color: rgba(0, 0, 0, 0.8);
+    border: 3px solid var(--violet);
+    border-radius: 20px;
+    padding: 40px;
+    max-width: 750px;
+    width: 90%;
+    box-shadow: 0 0 20px rgba(0,0,0,0.7);
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  /* Moon overlay for mystic effect */
+  .container::before {
+    content: "";
+    position: absolute;
+    top: -50%;
+    right: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(255,255,255,0.1), transparent);
+    border-radius: 50%;
+    animation: flicker 20s infinite alternate;
+  }
+
+  @keyframes flicker {
+    0% { opacity: 0.1; }
+    100% { opacity: 0.3; }
+  }
+
+  h1 {
+    font-family: 'Great Vibes', cursive;
+    font-size: 3em;
+    color: var(--lavender);
+    text-align: center;
+    margin-bottom: 20px;
+    text-shadow: 0 0 10px var(--violet);
+  }
+
+  /* Start Button styles with hover arrow effect */
+  #start-btn {
+    font-family: 'Great Vibes', cursive;
+    font-size: 2em;
+    padding: 15px 40px;
+    border: 3px solid var(--lavender);
+    border-radius: 50px;
+    background: transparent;
+    color: var(--ivory);
+    cursor: pointer;
+    margin-top: 30px;
+    box-shadow: 0 0 10px var(--violet);
+    transition: all 0.3s, transform 0.3s, letter-spacing 0.3s;
+    position: relative;
+  }
+
+  #start-btn:hover {
+    box-shadow: 0 0 20px var(--violet);
+    transform: scale(1.05);
+  }
+
+  /* Arrow icon hover effect */
+  #start-btn:hover::after {
+    content: "→"; /* arrow symbol */
+    position: absolute;
+    right: -30px;
+    top: 50%;
+    transform: translateY(-50%) translateX(10px);
+    font-size: 2em;
+    color: var(--violet);
+    opacity: 1;
+    transition: all 0.3s ease;
+  }
+
+  /* Style for questions */
+  .question {
+    font-family: 'Cinzel', serif;
+    font-size: 1.5em;
+    margin-bottom: 20px;
+    text-align: center;
+    color: var(--ivory);
+  }
+
+  /* Choices container */
+  .choices {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  /* Glitch & violet glow buttons */
+  .glitch-btn {
+    background-color: transparent;
+    border: 2px solid var(--lavender);
+    padding: 12px 24px;
+    margin: 10px 0;
+    border-radius: 30px;
+    font-family: 'Great Vibes', cursive;
+    font-size: 1.2em;
+    color: var(--ivory);
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s;
+  }
+
+  /* Glitch effect on hover */
+  .glitch-btn:hover {
+    box-shadow: 0 0 15px var(--violet), inset 0 0 10px var(--violet);
+    animation: glitch 0.2s steps(2, start) infinite;
+  }
+
+  @keyframes glitch {
+    0% {
+      text-shadow: 2px 0 var(--violet), -2px 0 var(--violet);
+    }
+    100% {
+      text-shadow: -2px 0 var(--violet), 2px 0 var(--violet);
+    }
+  }
+
+  /* Result styles */
+  #result {
+    margin-top: 40px;
+    text-align: center;
+    opacity: 0;
+    transition: opacity 1s ease-in;
+    width: 100%;
+  }
+
+  #result.show {
+    opacity: 1;
+  }
+
+  #result h2 {
+    font-family: 'Great Vibes', cursive;
+    font-size: 2.5em;
+    color: var(--violet);
+    margin-bottom: 20px;
+  }
+
+  #result p {
+    font-family: 'Cinzel', serif;
+    font-size: 1.3em;
+    line-height: 1.5;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+  /* Restart & Share buttons container */
+  #buttons-container {
+    margin-top: 20px;
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+  }
+
+  /* Restart & Share buttons styling */
+  .action-btn {
+    font-family: 'Great Vibes', cursive;
+    font-size: 1.5em;
+    padding: 10px 20px;
+    border: 3px solid var(--lavender);
+    border-radius: 50px;
+    background: transparent;
+    color: var(--ivory);
+    cursor: pointer;
+    transition: all 0.3s;
+  }
+
+  .action-btn:hover {
+    box-shadow: 0 0 10px var(--violet);
+    transform: scale(1.05);
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+  <h1>Love Quiz</h1>
+  <!-- Start Button -->
+  <button id="start-btn">Start the Night</button>
+  <div id="quiz-container" style="margin-top:20px; display:none;"></div>
+  <div id="result"></div>
+</div>
+
+<!-- Buttons for restart/share, hidden initially -->
+<div id="buttons-container" style="display:none;"></div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    let answers = {}; // change from const to let
+    const questions = [
+      {
+        question: "What is your favorite color?",
+        choices: ["Deep Purple", "Violet", "Cornflower Blue", "Rose Red"],
+        key: "color"
+      },
+      {
+        question: "Which month resonates with your soul?",
+        choices: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
+        key: "month"
+      },
+      {
+        question: "What's your deepest desire?",
+        choices: ["Eternal Love", "Mystery", "Power", "Beauty"],
+        key: "desire"
+      },
+      {
+        question: "Choose your ideal night:",
+        choices: ["Full Moon", "Starry Sky", "Candlelit Night", "Moonlit Forest"],
+        key: "night"
+      }
+    ];
+
+    const results = {
+      "deep purple": {
+        type: "The Mysterious One",
+        description: "Your soul is deep and enigmatic. You thrive in knowledge and understanding of how to use it."
+      },
+      "violet": {
+        type: "The Artistic Dreamer",
+        description: "Creative and romantic, your spirit dances in the imagination, inspiring those who seek beauty in the world."
+      },
+      "cornflower blue": {
+        type: "The Calm Wanderer",
+        description: "Serene and composed, you glide through life with grace, a poetic and peaceful presence."
+      },
+      "rose red": {
+        type: "The Passionate One",
+        description: "Your love is intense and lasting. You burn with desire and keep the embers glowing warm."
+      }
+    };
+
+    const startBtn = document.getElementById('start-btn');
+    const quizContainer = document.getElementById('quiz-container');
+    const resultDiv = document.getElementById('result');
+    const buttonsContainer = document.getElementById('buttons-container');
+
+    // Start quiz
+    startBtn.onclick = () => {
+      startBtn.style.display = 'none';
+      quizContainer.style.display = 'block';
+      showQuestion();
+    };
+
+    function showQuestion() {
+      const q = questions[currentQuestionIndex];
+      quizContainer.innerHTML = '';
+
+      const questionDiv = document.createElement('div');
+      questionDiv.className = 'question';
+      questionDiv.innerText = q.question;
+      quizContainer.appendChild(questionDiv);
+
+      const choicesDiv = document.createElement('div');
+      choicesDiv.className = 'choices';
+
+      q.choices.forEach(choice => {
+        const btn = document.createElement('button');
+        btn.className = 'glitch-btn';
+        btn.innerText = choice;
+        btn.onclick = () => {
+          answers[q.key] = choice;
+          currentQuestionIndex++;
+          if (currentQuestionIndex < questions.length) {
+            showQuestion();
+          } else {
+            showResult();
+          }
+        };
+        choicesDiv.appendChild(btn);
+      });
+
+      quizContainer.appendChild(choicesDiv);
+    }
+
+    let currentQuestionIndex = 0;
+
+    function showResult() {
+      // Clear previous
+      quizContainer.innerHTML = '';
+
+      // Show result
+      const color = answers.color.toLowerCase();
+      const month = answers.month.toLowerCase();
+      const desire = answers.desire.toLowerCase();
+      const night = answers.night.toLowerCase();
+
+      const scoreMap = {};
+      const favColors = ["deep purple", "violet", "cornflower blue", "rose red"];
+
+      if (favColors.includes(color)) {
+        scoreMap[color] = (scoreMap[color] || 0) + 3;
+      } else {
+        scoreMap[color] = (scoreMap[color] || 0) + 1;
+      }
+      scoreMap[month] = (scoreMap[month] || 0) + 1;
+      scoreMap[desire] = (scoreMap[desire] || 0) + 1;
+      scoreMap[night] = (scoreMap[night] || 0) + 1;
+
+      let maxScore = -1;
+      let resultKey = '';
+      for (const k in scoreMap) {
+        if (scoreMap[k] > maxScore) {
+          maxScore = scoreMap[k];
+          resultKey = k;
+        }
+      }
+
+      const resultData = results[resultKey] || {
+        type: "The Mysterious One",
+        description: "You are unique and mysterious, embodying deepthoughts and secrets."
+      };
+
+      const resultHTML = `<h2>${resultData.type}</h2><p>${resultData.description}</p>`;
+      resultDiv.innerHTML = resultHTML;
+      resultDiv.className = 'show';
+
+      // Create Restart button
+      const restartBtn = document.createElement('button');
+      restartBtn.className = 'action-btn';
+      restartBtn.innerText = 'Restart the Night';
+      restartBtn.onclick = () => {
+        answers = {}; // reset answers
+        currentQuestionIndex = 0;
+        resultDiv.innerHTML = '';
+        resultDiv.className = '';
+        document.getElementById('buttons-container').style.display = 'none';
+        document.getElementById('start-btn').style.display = 'block';
+      };
+
+      // Create Share button
+      const shareBtn = document.createElement('button');
+      shareBtn.className = 'action-btn';
+      shareBtn.innerText = 'Share the Mystery';
+      shareBtn.onclick = () => {
+        const shareText = `My vampire quiz result: ${resultData.type} - ${resultData.description}`;
+        if (navigator.clipboard) {
+          navigator.clipboard.writeText(shareText).then(() => {
+            alert('Result copied to clipboard!');
+          });
+        } else {
+          prompt('Copy your result:', shareText);
+        }
+      };
+
+      // Append buttons
+      const container = document.getElementById('buttons-container');
+      container.innerHTML = '';
+      container.appendChild(restartBtn);
+      container.appendChild(shareBtn);
+      container.style.display = 'flex';
+    }
+  });
+</script>
+</body>
+</html>
