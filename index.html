@@ -352,7 +352,7 @@
       // Create Restart button
       const restartBtn = document.createElement('button');
       restartBtn.className = 'action-btn';
-      restartBtn.innerText = 'Restart the Night';
+      restartBtn.innerText = 'Restart';
       restartBtn.onclick = () => {
         answers = {}; // reset answers
         currentQuestionIndex = 0;
@@ -367,7 +367,7 @@
       shareBtn.className = 'action-btn';
       shareBtn.innerText = 'Share the Mystery';
       shareBtn.onclick = () => {
-        const shareText = `My vampire quiz result: ${resultData.type} - ${resultData.description}`;
+        const shareText = `My valentine's quiz result: ${resultData.type} - ${resultData.description}`;
         if (navigator.clipboard) {
           navigator.clipboard.writeText(shareText).then(() => {
             alert('Result copied to clipboard!');
